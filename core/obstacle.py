@@ -22,7 +22,7 @@ class Obstacle:
 
         max_x = (config.BOARD_WIDTH - self.width) // self.size
         max_y = (config.BOARD_HEIGHT - self.height) // self.size
-
+        
         self.x = random.randint(0, max_x) * self.size
         self.y = random.randint(0, max_y) * self.size
 
@@ -38,11 +38,11 @@ class Obstacle:
         for i in range(self.length):
             if self.orientation == "horizontal":
                 tile_x = self.x + i * self.size
-                tile_y = self.y
+                tile_y = self.y 
             else:
-                tile_x = self.x
+                tile_x = self.x 
                 tile_y = self.y + i * self.size
-
+                
             board.board.blit(self.tile_image, (tile_x, tile_y))
 
     def get_occupied_positions(self):
@@ -50,12 +50,14 @@ class Obstacle:
         Returns all grid positions occupied by this obstacle.
         """
         positions = []
+        
         for i in range(self.length):
             if self.orientation == "horizontal":
-                grid_x = (self.x + i * self.size) // self.size
-                grid_y = self.y // self.size
+                grid_row = self.y // self.size
+                grid_col = (self.x + i * self.size) // self.size
             else:
-                grid_x = self.x // self.size
-                grid_y = (self.y + i * self.size) // self.size
-            positions.append((grid_x, grid_y))
+                grid_row = (self.y + i * self.size) // self.size
+                grid_col = self.x // self.size
+            positions.append((grid_row, grid_col))
+        
         return positions

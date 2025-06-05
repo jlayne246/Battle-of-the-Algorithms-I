@@ -69,7 +69,7 @@ Participants will program an AI version of the classic **Snake game**, where the
 To participate in the **Battle of the Algorithms**, each developer will need to submit their AI algorithm as a Python script that can be executed by the backend during match execution. Here are the key steps for submitting and integrating your algorithm into the tournament:
 
 ### Submission Deadline
-- All algorithm submissions **must be received by 3:00 PM on May 31st**.
+- All algorithm submissions **must be received by 3:00 PM on June 7th**.
 - **Late submissions will not be accepted**, and players will be disqualified.
 
 ### Submission Method
@@ -102,10 +102,10 @@ The goal is to celebrate your problem-solving and programming skills. AI is a to
 
 ## Competition Timeline
 - 👩🏾‍💻 Coding Begins: May 25th @ 3pm
-- 🗃 Coding Ends: May 31st @ 3pm
-- 👾 Live Tournament: June 7th @ 6pm on Discord
-- 👑 Winner Announced: June 7th (End of Live Tournament)
-- 📹 Video Submissions: June  7th @ 11pm
+- 🗃 Coding Ends: June 7th @ 3pm
+- 👾 Live Tournament: June 14th @ 6pm on Discord
+- 👑 Winner Announced: June 14th (End of Live Tournament)
+- 📹 Video Submissions: June  14th @ 11pm
 
 ## Video Submissions
 After submissions close, each contestant will be asked to submit a short video introducing themselves and speaking about any special techniques or strategies used in their code submissions to be used in the final video on TechnicallyTi. 
