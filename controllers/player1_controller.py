@@ -36,61 +36,52 @@ def get_next_move(board_state, player_state, opponent_state):
     Returns:
         str: The next direction ("left", "right", "up", "down").
     """
-    head_x = player_state["head_position"]["x"]
-    head_y = player_state["head_position"]["y"]
+     
+    head_row = player_state["head_position"]["row"]
+    head_col = player_state["head_position"]["col"]
     direction = player_state["direction"]
     body = player_state["body"]
 
-    def is_safe_move(x, y):
-        """Checks if a move to (x, y) is safe (not out of bounds or self-collision)."""
-        if x < 0 or x >= board_state["width"] or y < 0 or y >= board_state["height"]:
+    def is_safe_move(row, col):
+        if row < 0 or row >= board_state["rows"] or col < 0 or col >= board_state["cols"]:
             return False
         for obstacle in board_state["obstacle_locations"]:
-            # print(f"Player 1: Checking obstacle at ({obstacle[0]}, {obstacle[1]})")
-            # print(f"Player 1: Checking position ({x}, {y})")
-            obs_x, obs_y = obstacle
-            if obs_x * GRID_SIZE == x and obs_y * GRID_SIZE == y:
-                print(f"Player 1: Obstacle at ({x}, {y})")
+            obs_row, obs_col = obstacle
+            if obs_row == row and obs_col == col:
                 return False
-            # print(obstacle)
-        for segment in body:
-            if segment["x"] == x and segment["y"] == y:
+        for segment in body[1:]:
+            if segment["row"] == row and segment["col"] == col:
                 return False
         for segment in opponent_state["body"]:
-            if segment["x"] == x and segment["y"] == y:
+            if segment["row"] == row and segment["col"] == col:
                 return False
         return True
 
-    # List possible moves with their new positions
     moves = [
-        ("right", (head_x + GRID_SIZE, head_y)),
-        ("down", (head_x, head_y + GRID_SIZE)),
-        ("up", (head_x, head_y - GRID_SIZE)),
-        ("left", (head_x - GRID_SIZE, head_y)),
+        ("up", (head_row - 1, head_col)),
+        ("down", (head_row + 1, head_col)),
+        ("left", (head_row, head_col - 1)),
+        ("right", (head_row, head_col + 1)),
     ]
 
-    # Avoid reversing direction
     opposites = {"up": "down", "down": "up", "left": "right", "right": "left"}
-    
     food_list = board_state.get("food_locations", [])
 
-    # Sort moves by distance to food
     moves_sorted = sorted(
         moves,
         key=lambda m: get_distance_to_food(m[1][0], m[1][1], food_list)
     )
-    
-    print(moves_sorted)
 
-    for move, (new_x, new_y) in moves_sorted:
-        print(f"Player 1: Checking move {move} to ({new_x}, {new_y})")
-        print(is_safe_move(new_x, new_y))
-        if move != opposites[direction] and is_safe_move(new_x, new_y):
-            print(f"Player 1: {move} is safe")
+    for move, (new_row, new_col) in moves_sorted:
+        if move != opposites[direction] and is_safe_move(new_row, new_col):
             return move
 
-    # If no safe move, keep current direction
     return direction
+
+def get_distance_to_food(row, col, food_list):
+    if not food_list:
+        return float('inf')
+    return min(math.hypot(food[0] - row, food[1] - col) for food in food_list)
 
 def set_player_name():
     """
@@ -100,8 +91,3 @@ def set_player_name():
         str: The name of the player as a string.
     """
     return "Joshua"
-
-def get_distance_to_food(x, y, food_list):
-    if not food_list:
-        return float('inf')
-    return min(math.hypot(food[0] - x, food[1] - y) for food in food_list)
